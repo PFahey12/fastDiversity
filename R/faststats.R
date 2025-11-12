@@ -66,9 +66,12 @@ faststats <- function (gt, genetic_group_variable, site_variable, minimum_n = 3,
       locus_out_list <- list()
     }
     
-    genetic_group_freq <- table(genetic_group_variable) # get number of samples per genetic group
-    genetic_groups <- names(which(genetic_group_freq >= minimum_n)) # get the genetic groups with n>=minimum
-    
+    # get the only the genetic groups containing at least one site with n>=minimum
+    genetic_group_freq <- as.data.frame(table(genetic_group_variable,site_variable))
+    genetic_groups <- genetic_group_freq$genetic_group_variable[which(genetic_group_freq$Freq >= minimum_n)] 
+    genetic_groups <- unique(genetic_groups)
+    genetic_groups
+  
     for (group in genetic_groups) { # for each genetic group
       gt_group <- gt[which(genetic_group_variable == group), ] # filter samples
       site_variable_group <- site_variable[which(genetic_group_variable ==  group)] # get vector of sites for samples in the group
