@@ -97,9 +97,12 @@ resampling_loci_CI <- function(gt, boots = 100, resample_n = NULL, CI_alpha = 0.
   
   ci_probs <- c(CI_alpha / 2, 1 - CI_alpha / 2)
   
-  global_ho_ci  <- c(quantile(rowMeans(ho_mat,  na.rm = TRUE), probs = ci_probs), 'mean'=mean(rowMeans(ho_mat,  na.rm = TRUE)))
-  global_he_ci  <- c(quantile(rowMeans(he_mat,  na.rm = TRUE), probs = ci_probs), 'mean'=mean(rowMeans(he_mat,  na.rm = TRUE)))
-  global_fis_ci <- c(quantile(rowMeans(fis_mat, na.rm = TRUE), probs = ci_probs), 'mean'=mean(rowMeans(fis_mat, na.rm = TRUE)))
+  global_ho_ci  <- c(quantile(rowMeans(ho_mat,  na.rm = TRUE), probs = ci_probs), 
+                     'mean'=mean(rowMeans(ho_mat,  na.rm = TRUE), na.rm = TRUE))
+  global_he_ci  <- c(quantile(rowMeans(he_mat,  na.rm = TRUE), probs = ci_probs), 
+                     'mean'=mean(rowMeans(he_mat,  na.rm = TRUE), na.rm = TRUE))
+  global_fis_ci <- c(quantile(rowMeans(fis_mat, na.rm = TRUE), probs = ci_probs), 
+                     'mean'=mean(rowMeans(fis_mat, na.rm = TRUE), na.rm = TRUE))
   
   return(c('loci_f' = round(global_fis_ci, 3), 
            'loci_he'  = round(global_he_ci, 3), 
